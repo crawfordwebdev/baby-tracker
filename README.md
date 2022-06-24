@@ -3,7 +3,7 @@
 
 ## Getting Started: 
 - **[Deployed Link - Not Yet Deployed](#)**
-- **[Plan Link](https://trello.com/b/M04V2woe/michael-crawford-portfolio)**<br>
+- **[Plan Link](https://trello.com/b/UXagERsE/baby-tracker)**<br>
 
 ## Screenshot: 
 
