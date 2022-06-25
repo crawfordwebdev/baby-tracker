@@ -9,14 +9,14 @@ const router = Router()
 // GET localhost:3000/baby
 router.get('/', isLoggedIn, babyCtrl.index)
 
+// POST localhost:3000/baby
+router.post('/', isLoggedIn, babyCtrl.create)
+
 // GET localhost:3000/baby/:id
 router.get('/:id', isLoggedIn, isCareGiver, babyCtrl.show)
 
 // GET localhost:3000/baby/:id/edit
 router.get('/:id/edit', isLoggedIn, isCareGiver, babyCtrl.edit)
-
-// POST localhost:3000/baby
-router.post('/', isLoggedIn, babyCtrl.create)
 
 // PUT localhost:3000/baby/:id
 router.put('/:id', isLoggedIn, isCareGiver, babyCtrl.update)
