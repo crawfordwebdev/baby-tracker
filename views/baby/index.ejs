@@ -1,0 +1,30 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+<section>
+  <h1>Baby</h1>
+  <form action="/baby" method="POST">
+    <h2>Add a baby</h2>
+    <label>
+      Name:
+      <input type="text" name="name" autocomplete="off" required>
+    </label>
+    <label>
+      Birthday:
+      <input type="datetime-local"  name="birthday" value="<%= todaysDate %>">
+    </label>
+    <label>
+      Sex:
+      <input type="text" name="sex">
+    </label>
+    <button type="submit">Add a baby</button>
+  </form>
+  <h2>My Babies</h2>
+  <ul>
+  <% babyList.forEach(baby => { %>
+    <li>
+      <a href="/baby/<%= baby._id %>"><%= baby.name %></a>
+    </li>
+  <% }) %>
+  </ul>
+</section>
+<%- include('../partials/footer') %>

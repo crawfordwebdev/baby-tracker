@@ -1,0 +1,36 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<section>
+  <h1>Update <%= baby.name %></h1>
+  <form action="/baby/<%= baby._id %>?_method=PUT" method="POST">
+    <label>
+      Name:
+      <input 
+        type="text" 
+        name="name"
+        value="<%= baby.name %>"
+        required
+      >
+    </label>
+    <label>
+      Birthday:
+      <input 
+        type="datetime-local" 
+        name="birthday"
+        value="<%= baby.birthday %>"
+      >
+    </label>
+    <label>
+      Sex
+      <input 
+        type="text" 
+        name="sex"
+        value="<%= baby.sex %>"
+      >
+    </label>
+    <button type="submit">Update</button>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

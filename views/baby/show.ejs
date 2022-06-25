@@ -1,0 +1,25 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<% if (baby.caregiver.equals(user?.profile._id)) { %>
+<section>
+  <h1>Baby Details</h1>
+
+  <div>Name: <%= baby.name %></div>
+  <% if (baby.birthday) { %> 
+  <div>Birthday: <%= baby.birthday %></div>
+  <% } %> 
+  <% if (baby.sex) { %> 
+  <div>Sex: <%= baby.sex %></div>
+  <% } %> 
+
+  <form action="/baby/<%= baby._id %>/edit" method="GET">
+    <button class="btn" type="submit">Edit this baby</button>
+  </form>
+  <form action="/baby/<%= baby._id %>?_method=DELETE" method="POST">
+    <button class="btn" type="submit">Remove this baby</button>
+  </form>
+</section>
+<% } %>
+
+<%- include('../partials/footer') %>
