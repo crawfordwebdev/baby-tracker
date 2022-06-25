@@ -53,3 +53,36 @@ form {
 form>label {
   display: flex;
 }
+
+
+body{
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto 10px;
+  grid-template-areas: 
+    "header"
+    "main"
+    "bottomNavbar";
+}
+
+header {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+}
+
+#bottom-navbar {
+  grid-area: bottomNavbar;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  gap: 5px;
+  /* position: fixed; */
+  /* bottom: 0px; */
+}
+
+nav>ul {
+  list-style: none;
+}
