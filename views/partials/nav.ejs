@@ -3,6 +3,26 @@
   <% } %>
 </head>
 <body>
+
+  <div id="bottom-navbar-container">
+    <div class="logo">
+      <i class="fas fa-baby"></i>
+    </div>
+    <input type="checkbox" class="toggle" id="nav-toggle">
+    <label for="nav-toggle" id="nav-toggle-label">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </label>
+    <nav>
+      <ul>
+        <li><a href=#><i class="fas fa-baby" alt="View Babies"></i>View Babies</a></li>
+        <li><a href=#><i class="fas fa-chart-column" alt="View Statistics"></i>View Statistics</a></li>
+        <li><a href=#><i class="fas fa-trophy" alt="View All Statistics"></i>All Statistics</a></li>
+      </ul>
+    </nav>
+  </div>
+  
   <header>
     <nav>
       <% if (user) { %>
@@ -18,3 +38,4 @@
       <% } %>
     </nav>
   </header>
+  
