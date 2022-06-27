@@ -24,6 +24,13 @@ router.put('/:id', isLoggedIn, isCareGiver, babyCtrl.update)
 // DELETE localhost:3000/baby/:id
 router.delete('/:id', isLoggedIn, isCareGiver, babyCtrl.delete)
 
+// GET localhost:3000/baby/:id/addData
+router.get('/:id/addData', isLoggedIn, isCareGiver, babyCtrl.showAddData)
+
+// POST localhost:3000/baby/:id/feeding
+router.post('/:id/feeding', isLoggedIn, babyCtrl.createFeeding)
+
+
 export {
   router
 }
