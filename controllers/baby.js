@@ -1,15 +1,17 @@
 import { Baby } from '../models/baby.js'
 
-function index(req, res) {
-  let todaysDate = new Date()
-  todaysDate = todaysDate.toISOString().slice(0, 16)
+function todaysDate() {
+  return new Date().toISOString().slice(0, 16)
+}
 
-  console.log(todaysDate)
+
+
+function index(req, res) {
   Baby.find({})
   .then(babyList => {
     res.render('baby/index', {
       babyList,
-      todaysDate: todaysDate,
+      todaysDate: todaysDate(),
       title: "Baby List",
       user: req.user ? req.user : null
     })
@@ -66,7 +68,6 @@ function update(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
     if (baby.caregiver.equals(req.user.profile._id)) {
-      req.body.tasty = !!req.body.tasty
       baby.updateOne(req.body, {new: true})
       .then(updatedbaby => {
         res.redirect(`/baby/${baby._id}`)
@@ -99,6 +100,46 @@ function removeBaby(req, res) {
   })
 }
 
+function showAddData(req, res) {
+  Baby.findById(req.params.id)
+  .populate('caregiver')
+  .then(baby => {
+    console.log(baby)
+    res.render(`baby/addData`,{
+      baby,
+      title: `${baby.name}`,
+      todaysDate: todaysDate()
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/baby")
+  })
+}
+
+
+function createFeeding(req, res) {
+  Baby.findById(req.params.id)
+  .then(baby => {
+    // Take care of any information left out
+    for (let key in req.body) {
+      if (req.body[key] === '') delete req.body[key]
+    }
+    baby.feedings.push(req.body)
+    baby.save()
+    .then(() => {
+      res.redirect(`/baby/${baby._id}`)
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect("/baby")
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/baby")
+  })
+}
 
 export {
   index,
@@ -106,5 +147,7 @@ export {
   edit,
   create,
   update,
-  removeBaby as delete
+  removeBaby as delete,
+  showAddData,
+  createFeeding
 }
