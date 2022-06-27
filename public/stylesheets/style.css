@@ -77,3 +77,17 @@ form {
 form>label {
   display: flex;
 }
+
+.baby-list {
+  list-style: none;
+}
+
+.baby-list > li > a {
+  text-decoration: none;
+  color: var(--fg-color);
+  font-weight: 600;
+}
+
+section {
+  margin: 0 0 2rem 0;
+}
