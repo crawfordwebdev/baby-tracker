@@ -4,6 +4,7 @@
 <% if (baby.caregiver.equals(user?.profile._id)) { %>
 <section>
   <h1>Baby Details</h1>
+  <a href="/baby/<%= baby._id %>/addData"><button class="btn">Add Data</button></a>
 
   <div>Name: <%= baby.name %></div>
   <% if (baby.birthday) { %> 
@@ -19,7 +20,35 @@
   <form action="/baby/<%= baby._id %>?_method=DELETE" method="POST">
     <button class="btn" type="submit">Remove this baby</button>
   </form>
+
 </section>
 <% } %>
+
+<% if (baby.feedings.length > 0) { %>
+  <section id="feedings-section">
+    <h2>Feedings: <%= baby.feedings.length %></h2>
+
+    <% baby.feedings.forEach(feeding => { %>
+      <% if (feeding.date) { %>
+        <div class="data-point">Date: <%= feeding.date %></div>
+      <% } %>
+      <% if (feeding.feedType) { %>
+        <div class="data-point">Feed Type: <%= feeding.feedType %></div>
+      <% } %>
+      <% if (feeding.amount) { %>
+        <div class="data-point">Amount: <%= feeding.amount %></div>
+      <% } %>
+      <% if (feeding.startTime) { %>
+        <div class="data-point">Start Time: <%= feeding.startTime %></div>
+      <% } %>
+      <% if (feeding.endTime) { %>
+        <div class="data-point">End Time: <%= feeding.endTime %></div>
+      <% } %>
+      <% if (feeding.startTime && feeding.endTime) { %>
+        <div class="data-point">Total Feed Time: <%= feeding.endTime - feeding.startTime %></div>
+      <% } %> 
+    <% }) %>
+  </section>
+<% } %> 
 
 <%- include('../partials/footer') %>
