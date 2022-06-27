@@ -1,0 +1,27 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+<section>
+  <h1><%= baby.name %></h1>
+  <form action="/baby/<%= baby._id %>/feeding" method="POST">
+    <h2>Add a feed</h2>
+    <label>
+      Date:
+      <input type="datetime-local"  name="date" value="<%= todaysDate %>">
+    </label>
+    <label>
+      Feed Type:
+      <input type="text" name="feedType">
+    </label>
+    <label>
+      Amount:
+      <input type="number" name="amount"> 
+    </label>
+    <label>
+      Start Time:
+      <input type="datetime-local" name="startTime" value="<%= todaysDate %>">
+    </label>
+    <button type="submit">Add a feed</button>
+  </form>
+
+</section>
+<%- include('../partials/footer') %>
