@@ -2,6 +2,14 @@
 <%- include('../partials/nav') %>
 <section>
   <h1>Baby</h1>
+  <h2>My Babies</h2>
+  <ul>
+  <% babyList.forEach(baby => { %>
+    <li>
+      <a href="/baby/<%= baby._id %>"><%= baby.name %></a>
+    </li>
+  <% }) %>
+  </ul>
   <form action="/baby" method="POST">
     <h2>Add a baby</h2>
     <label>
@@ -18,13 +26,6 @@
     </label>
     <button type="submit">Add a baby</button>
   </form>
-  <h2>My Babies</h2>
-  <ul>
-  <% babyList.forEach(baby => { %>
-    <li>
-      <a href="/baby/<%= baby._id %>"><%= baby.name %></a>
-    </li>
-  <% }) %>
-  </ul>
+
 </section>
 <%- include('../partials/footer') %>

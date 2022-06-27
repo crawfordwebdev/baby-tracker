@@ -1,41 +1,47 @@
   <% if (!user) { %>
-    <link rel="stylesheet" href="/stylesheets/siwg.css">
+    <link rel='stylesheet' href='/stylesheets/siwg.css'>
   <% } %>
 </head>
 <body>
+  <nav class='navbar sticky-top navbar-expand-sm bg-light'>
+    <div class='container-fluid'>
+      <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+        <span class='navbar-toggler-icon'></span>
+      </button>
+      <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+        <ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+          <li class='nav-item'>
+            <a class='nav-link' href='/baby'><i class='fas fa-baby' alt='View Babies'></i>View Babies</a>
+          </li>
+          <li class='nav-item'>
+            <a href=#><i class='fas fa-chart-column' alt='View Statistics'></i>View Statistics</a>
+          </li>
+          <li class='nav-item'>
+            <a href=#><i class='fas fa-trophy' alt='View All Statistics'></i>All Statistics</a>
+          </li>
+          <li class='nav-item d-flex'>
+          </li>
+          </ul>
 
-  <div id="bottom-navbar-container">
-    <div class="logo">
-      <i class="fas fa-baby"></i>
+          <div class='d-flex'>
+          <% if (user) { %>
+            <a href='/auth/logout'>
+              <button type='submit'>Logout</button>
+            </a>
+          <% } else { %>
+            <a href='/auth/google' class='siwg-link'>
+              <button type='submit' class='siwg'>
+                <img id='siwg-image' alt='Sign in with Google' />
+              </button>
+            </a>
+          <% } %>
+        </div>
+
+      </div>
     </div>
-    <input type="checkbox" class="toggle" id="nav-toggle">
-    <label for="nav-toggle" id="nav-toggle-label">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-    </label>
-    <nav>
-      <ul>
-        <li><a href=#><i class="fas fa-baby" alt="View Babies"></i>View Babies</a></li>
-        <li><a href=#><i class="fas fa-chart-column" alt="View Statistics"></i>View Statistics</a></li>
-        <li><a href=#><i class="fas fa-trophy" alt="View All Statistics"></i>All Statistics</a></li>
-      </ul>
-    </nav>
-  </div>
-  
+  </nav>
+
   <header>
-    <nav>
-      <% if (user) { %>
-        <a href="/auth/logout">
-          <button type="submit">Logout</button>
-        </a>
-      <% } else { %>
-        <a href="/auth/google" class="siwg-link">
-          <button type="submit" class="siwg">
-            <img id="siwg-image" alt="Sign in with Google" />
-          </button>
-        </a>
-      <% } %>
-    </nav>
+
   </header>
   
