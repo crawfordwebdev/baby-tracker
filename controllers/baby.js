@@ -53,7 +53,8 @@ function edit(req, res) {
   .then(baby => {
     res.render('baby/edit', {
       baby: baby,
-      title: `Update ${baby.name}`
+      title: `Update ${baby.name}`,
+      dayjs: dayjs
     })
   })
   .catch(err => {
@@ -106,7 +107,8 @@ function showAddData(req, res) {
     res.render(`baby/addData`,{
       baby,
       title: `${baby.name}`,
-      todaysDate: todaysDate()
+      todaysDate: dayjs().format(),
+      dayjs: dayjs
     })
   })
   .catch(err => {
