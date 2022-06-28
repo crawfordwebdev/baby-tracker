@@ -1,15 +1,14 @@
 import { Baby } from '../models/baby.js'
-
-function todaysDate() {
-  return new Date().toISOString().slice(0, 16)
-}
+import dayjs from 'dayjs'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
+dayjs.extend(LocalizedFormat)
 
 function index(req, res) {
   Baby.find({})
   .then(babyList => {
     res.render('baby/index', {
       babyList,
-      todaysDate: todaysDate(),
+      todaysDate: dayjs().format('YYYY-MM-DD'),
       title: "Baby List",
       user: req.user ? req.user : null
     })
@@ -39,7 +38,8 @@ function show(req, res) {
     console.log(baby)
     res.render('baby/show',{
       baby,
-      title: `${baby.name} Details`
+      title: `${baby.name} Details`,
+      dayjs: dayjs
     })
   })
   .catch(err => {
