@@ -47,6 +47,9 @@
       <% if (feeding.startTime && feeding.endTime) { %>
         <div class="data-point">Total Feed Time: <%= feeding.endTime - feeding.startTime %></div>
       <% } %> 
+      <form action="/baby/<%= baby._id %>/feeding/<%= feeding._id %>?_method=DELETE" method="POST">
+        <button class="btn" type="submit">Delete this feed</button>
+      </form>
     <% }) %>
   </section>
 <% } %> 

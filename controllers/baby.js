@@ -4,8 +4,6 @@ function todaysDate() {
   return new Date().toISOString().slice(0, 16)
 }
 
-
-
 function index(req, res) {
   Baby.find({})
   .then(babyList => {
@@ -141,6 +139,29 @@ function createFeeding(req, res) {
   })
 }
 
+
+function deleteFeeding(req, res) {
+  Baby.findById(req.params.id)
+  .then(baby => {
+    console.log("req.params.feedid: ", req.params.feedid)
+    baby.feedings.remove({_id: req.params.feedid})
+    baby.save()
+    .then(feeding => {
+      console.log("Feeding: ", feeding)
+      res.redirect(`/baby/${baby._id}`)
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect("/baby")
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/baby")
+  })
+}
+
+
 export {
   index,
   show,
@@ -149,5 +170,6 @@ export {
   update,
   removeBaby as delete,
   showAddData,
-  createFeeding
+  createFeeding,
+  deleteFeeding
 }
