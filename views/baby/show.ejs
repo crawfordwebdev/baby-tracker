@@ -8,7 +8,7 @@
 
   <div>Name: <%= baby.name %></div>
   <% if (baby.birthday) { %> 
-  <div>Birthday: <%= baby.birthday %></div>
+  <div>Birthday: <%= dayjs(baby.birthday).format('LL') %></div>
   <% } %> 
   <% if (baby.sex) { %> 
   <div>Sex: <%= baby.sex %></div>
@@ -30,7 +30,7 @@
 
     <% baby.feedings.forEach(feeding => { %>
       <% if (feeding.date) { %>
-        <div class="data-point">Date: <%= feeding.date %></div>
+        <div class="data-point">Date: <%= dayjs(feeding.date).format('L LT') %></div>
       <% } %>
       <% if (feeding.feedType) { %>
         <div class="data-point">Feed Type: <%= feeding.feedType %></div>
@@ -39,10 +39,10 @@
         <div class="data-point">Amount: <%= feeding.amount %></div>
       <% } %>
       <% if (feeding.startTime) { %>
-        <div class="data-point">Start Time: <%= feeding.startTime %></div>
+        <div class="data-point">Start Time: <%= dayjs(feeding.startTime).format('L LT') %></div>
       <% } %>
       <% if (feeding.endTime) { %>
-        <div class="data-point">End Time: <%= feeding.endTime %></div>
+        <div class="data-point">End Time: <%= dayjs(feeding.endTime).format('L LT') %></div>
       <% } %>
       <% if (feeding.startTime && feeding.endTime) { %>
         <div class="data-point">Total Feed Time: <%= feeding.endTime - feeding.startTime %></div>
