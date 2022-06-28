@@ -1,7 +1,10 @@
 import { Baby } from '../models/baby.js'
 import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
+import utc from 'dayjs/plugin/utc.js'
 dayjs.extend(LocalizedFormat)
+dayjs.extend(utc)
+
 
 function index(req, res) {
   Baby.find({})
@@ -21,6 +24,9 @@ function index(req, res) {
 
 function create(req, res) {
   req.body.caregiver = req.user.profile._id // Can change this to .push for multiple caregiver feature later
+  // Fixing JavaScripts off by one day issue
+  const birthDate = new Date(req.body.birthday)
+  req.body.birthday = birthDate.toUTCString()
   Baby.create(req.body)
   .then(baby => {
     res.redirect('/baby')
@@ -107,8 +113,8 @@ function showAddData(req, res) {
     res.render(`baby/addData`,{
       baby,
       title: `${baby.name}`,
-      todaysDate: dayjs().format(),
-      dayjs: dayjs
+      todaysDate: dayjs().format('YYYY-MM-DD'),
+      todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]MM'),
     })
   })
   .catch(err => {
@@ -119,12 +125,23 @@ function showAddData(req, res) {
 
 
 function createFeeding(req, res) {
+  console.log("REQ BODY: ", req.body)
+  console.log("dayjs UTC", dayjs(req.body.date).utc().format())
   Baby.findById(req.params.id)
   .then(baby => {
     // Take care of any information left out
     for (let key in req.body) {
       if (req.body[key] === '') delete req.body[key]
     }
+
+    // Handling Javascript off by one day issues
+    if (req.body.date) {
+      req.body.date = dayjs(req.body.date).utc().format()
+    }
+    if (req.body.startTime) {
+      req.body.startTime = dayjs(req.body.startTime).utc().format()
+    }
+
     baby.feedings.push(req.body)
     baby.save()
     .then(() => {
