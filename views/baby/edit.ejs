@@ -16,9 +16,9 @@
     <label>
       Birthday:
       <input 
-        type="datetime-local" 
+        type="date" 
         name="birthday"
-        value="<%= baby.birthday %>"
+        value="<%= dayjs(baby.birthday).format('YYYY-MM-DD') %>"
       >
     </label>
     <label>
