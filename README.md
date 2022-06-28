@@ -8,7 +8,7 @@
 ## Screenshot: 
 
 ## Technologies Used: 
-HTML, CSS, JavaScript, node.js, express.js, mongoose, mongoDB<br>
+HTML, CSS, JavaScript, node.js, express.js, Day.js, mongoose, mongoDB<br>
 
 ## Next Steps:
 - Next Step Placeholder
