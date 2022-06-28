@@ -6,7 +6,7 @@
     <h2>Add a feed</h2>
     <label>
       Date:
-      <input type="datetime-local"  name="date" value="<%= todaysDate %>">
+      <input type="date"  name="date" value="<%= dayjs().format('YYYY-MM-DD') %>">
     </label>
     <label>
       Feed Type:
