@@ -1,0 +1,32 @@
+<%- include('../../partials/html-head') %>
+<%- include('../../partials/nav') %>
+
+<section>
+  <h1><%= baby.name %></h1>
+  <form action="/baby/<%= baby._id %>/feedings/<%= feed._id %>?_method=PUT" method="POST">
+    <h2>Update feed</h2>
+    <label>
+      Date:
+      <input type="date"  name="date" value="<%= formattedDate %>">
+    </label>
+    <label>
+      Feed Type:
+      <input type="text" name="feedType" value="<%= feed.feedType ? feed.feedType : '' %>">
+    </label>
+    <label>
+      Amount:
+      <input type="number" name="amount" value="<%= feed.amount ? feed.amount : '' %>"> 
+    </label>
+    <label>
+      Start Time:
+      <input type="datetime-local" name="startTime" value="<%= formattedStartTime %>">
+    </label>
+    <label>
+      End Time:
+      <input type="datetime-local" name="endTime" value="<%= formattedEndtime %>">
+    </label>
+    <button type="submit">Update feed</button>
+  </form>
+</section>
+
+<%- include('../../partials/footer') %>
