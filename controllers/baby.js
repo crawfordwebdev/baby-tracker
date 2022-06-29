@@ -5,6 +5,27 @@ import utc from 'dayjs/plugin/utc.js'
 dayjs.extend(LocalizedFormat)
 dayjs.extend(utc)
 
+// Modified from: 
+// https://www.techstack4u.com/javascript/convert-milliseconds-to-hours-min-sec-format-in-javascript/
+function getHourFormatFromMilliSeconds(millisec) {
+  let seconds = (millisec / 1000).toFixed(0)
+  let minutes = Math.floor(Number(seconds) / 60).toString()
+  let hours
+  if (Number(minutes) > 59) {
+    hours = Math.floor(Number(minutes) / 60)
+    hours = (hours >= 10) ? hours : "0" + hours
+    minutes = (Number(minutes) - (hours * 60)).toString()
+  }
+  minutes = (Number(minutes) >= 10) ? minutes : "0" + minutes
+  seconds = Math.floor(Number(seconds) % 60).toString()
+  seconds = (Number(seconds) >= 10) ? seconds : "0" + seconds
+
+  if (!hours) { hours = "00" }
+  if (!minutes) { minutes = "00" }
+  if (!seconds) { seconds = "00" }
+  
+  return hours + ":" + minutes + ":" + seconds
+}
 
 function index(req, res) {
   Baby.find({})
@@ -43,14 +64,43 @@ function show(req, res) {
   .then(baby => {
     // const unFinishedFeedings = Baby.feedings.find({hasEnded : false})
     // console.log ("unfinished feedings: ", unFinishedFeedings)
-    const unfinishedFeedings = baby.feedings.filter(feeding => feeding.hasEnded === false)
-    console.log(unfinishedFeedings)
-    baby.unfinishedFeedings = unfinishedFeedings
-    res.render('baby/show',{
-      baby,
-      title: `${baby.name} Details`,
-      dayjs: dayjs
+
+    // // This works
+    // baby.feedings.forEach(feed => {
+    //   if (typeof feed.startTime != "undefined" && typeof feed.endTime != "undefined") {
+    //     feed.hasEnded = true
+    //   } else {
+    //     feed.hasEnded = false
+    //   }
+    // });
+    baby.feedings.forEach(feed => {
+      if (feed.startTime && feed.endTime) {
+        feed.hasEnded = true
+      } else {
+        feed.hasEnded = false
+      }
+    });
+    baby.save()
+    .then(baby => {
+      const unfinishedFeedings = baby.feedings.filter(feeding => feeding.hasEnded === false)
+      console.log("unfinishedFeedings: ", unfinishedFeedings)
+      baby.unfinishedFeedings = unfinishedFeedings
+  
+      console.log( "baby.unfinishedFeedings: ", baby.unfinishedFeedings)
+      res.render('baby/show',{
+        baby,
+        title: `${baby.name} Details`,
+        dayjs: dayjs,
+        todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
+        getHourFormatFromMilliSeconds,
+      })
     })
+    .catch(err => {
+      console.log(err)
+      res.redirect("/baby")
+    })
+
+
   })
   .catch(err => {
     console.log(err)
@@ -119,7 +169,7 @@ function showAddData(req, res) {
       baby,
       title: `${baby.name}`,
       todaysDate: dayjs().format('YYYY-MM-DD'),
-      todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]MM'),
+      todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
     })
   })
   .catch(err => {
@@ -148,14 +198,28 @@ function editFeeding(req, res) {
     //   feeding.endTime = dayjs(feeding.endTime).format('YYYY-MM-DD[T]HH[:]MM')
     // }
 
-    const formattedDate = feeding.date ? feeding.date.toISOString().slice(0,10) : dayjs().format('YYYY-MM-DD')
-    const formattedStartTime = feeding.startTime.toISOString().slice(0,16)
-    const formattedEndtime = feeding.endtime ?  feeding.endTime.toISOString().slice(0,16) : dayjs().format('YYYY-MM-DD[T]HH[:]MM')
+
+    // const formattedDate = feeding.date ? feeding.date.toISOString().slice(0,10) : dayjs().format('YYYY-MM-DD')
+    // const formattedStartTime = feeding.startTime.toISOString().slice(0,16)
+    // const formattedEndtime = feeding.endtime ?  feeding.endTime.toISOString().slice(0,16) : dayjs().format('YYYY-MM-DD[T]HH[:]MM')
 
 
 
-    console.log("toISOString StartTime: ", feeding.startTime.toISOString().slice(0,16))
-    console.log("feeding.startTime dayjs: ", dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]MM'))
+    // console.log("toISOString StartTime: ", feeding.startTime.toISOString().slice(0,16))
+    // console.log("feeding.startTime dayjs: ", dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]MM'))
+
+
+    console.log("feeding.startTime: ", feeding.startTime)
+
+    const formattedDate = feeding.date ? dayjs(feeding.date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD')
+    const formattedStartTime = feeding.startTime ? dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]mm') : ''
+    const formattedEndtime = feeding.endtime ? dayjs(feeding.endTime ).format('YYYY-MM-DD[T]HH[:]mm') : dayjs().format('YYYY-MM-DD[T]HH[:]mm')
+
+    
+
+
+    console.log("formattedStartTime ", formattedStartTime)
+    console.log("formattedEndtime ", formattedEndtime)
 
     // console.log("Feeding: ", feeding)
 
@@ -167,7 +231,7 @@ function editFeeding(req, res) {
       formattedEndtime,
       title: `${baby.name} Update Feeding`,
       todaysDate: dayjs().format('YYYY-MM-DD'),
-      todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]MM'),
+      todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
     })
   })
   .catch(err => {
@@ -216,6 +280,10 @@ function updateFeeding(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
 
+    for (let key in req.body) {
+      if (req.body[key] === '') delete req.body[key]
+    }
+
     if (req.body.date) {
       req.body.date = dayjs(req.body.date).utc().format()
     }
@@ -230,8 +298,11 @@ function updateFeeding(req, res) {
     feeding.set(req.body)
     if (req.body.startTime && req.body.endTime) {
       feeding.hasEnded = true
+      console.log("has it ended: ", feeding.hasEnded)
     }
-    feeding.save()
+    console.log("Full baby: ", JSON.stringify(baby))
+    
+    baby.save()
     .then(feeding=> {
       console.log("Feeding Saved: ", feeding)
       res.redirect(`/baby/${baby._id}`)

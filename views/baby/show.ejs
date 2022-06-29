@@ -3,9 +3,72 @@
 
 <% if (baby.caregiver.equals(user?.profile._id)) { %>
 
-  <% baby.unfinishedFeedings.forEach(feeding => { %>
-   <div><%= feeding.feedType %> </div>
-  <% }) %>
+<% if (baby.unfinishedFeedings.length > 0) { %>
+<section>
+  <div class="col-lg-8 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Unfinished Feedings</h4>
+        <p class="card-description">
+          Please set an end time for your feeds<br>
+          Total Unfinished Feedings: <%= baby.unfinishedFeedings.length %> 
+        </p>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Finish</th>
+                <th>Feed Date</th>
+                <th>Feed Type</th>
+                <th>Amount</th>
+                <th>Start Time</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% baby.unfinishedFeedings.forEach(feeding => { %>
+              <tr>
+                <td>
+                  <form action="/baby/<%= baby._id %>/feeding/<%= feeding._id %>?_method=PUT" method="POST">
+                    <input type="hidden" name="endTime" value="<%= todaysDateTimeLocal %>">
+                    <button type="submit" class="btn unfinished-item">Finish Feed</button>
+                  </form>                    
+                </td>
+                <td>
+                <% if (feeding.date) { %>
+                  <div class="data-point"><%= dayjs(feeding.date).format('L') %></div>
+                <% } %>
+                </td>
+                <td>
+                <% if (feeding.feedType) { %>
+                  <div class="data-point"><%= feeding.feedType %></div>
+                <% } %>
+                </td>
+                <td>
+                <% if (feeding.amount) { %>
+                  <div class="data-point"><%= feeding.amount %></div>
+                <% } %>
+                </td>
+                <td>
+                <% if (feeding.startTime) { %>
+                  <div class="data-point"><%= dayjs(feeding.startTime).format('L LT') %></div>
+                <% } %>
+                </td>
+                <td>
+                  <a href="/baby/<%= baby._id %>/feeding/<%= feeding._id %>/edit">
+                    <button class="btn" type="submit"><i class="fa-solid fa-pen fa-2xl"></i></button>
+                  </a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<% } %> 
 
 <section>
   <h1>Baby Details</h1>
@@ -42,6 +105,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th>Has Ended</th>
                 <th>Date</th>
                 <th>Feed Type</th>
                 <th>Amount</th>
@@ -55,6 +119,9 @@
             <tbody>
               <% baby.feedings.forEach(feeding => { %>
               <tr>
+                <td>
+                  <%= feeding.hasEnded %> 
+                </td>
                 <td>
                 <% if (feeding.date) { %>
                   <div class="data-point"><%= dayjs(feeding.date).format('L') %></div>
@@ -82,7 +149,9 @@
                 </td>
                 <td>
                 <% if (feeding.startTime && feeding.endTime) { %>
-                  <div class="data-point"><%= feeding.endTime - feeding.startTime %></div>
+                  <% const startTime = dayjs(feeding.startTime) %>
+                  <% const endTime = dayjs(feeding.endTime) %>
+                  <div class="data-point"><%= getHourFormatFromMilliSeconds(endTime.diff(startTime, 'millisecond')).slice(0, 5) %></div>
                 <% } %> 
                 </td>
                 <td>
