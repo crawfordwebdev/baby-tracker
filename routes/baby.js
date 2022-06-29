@@ -33,6 +33,16 @@ router.post('/:id/feeding', isLoggedIn, babyCtrl.createFeeding)
 // DELETE localhost:3000/baby/:id/feeding/:feedid
 router.delete('/:id/feeding/:feedid', isLoggedIn, isCareGiver, babyCtrl.deleteFeeding)
 
+// PUT localhost:3000/baby/:id
+router.put('/:id', isLoggedIn, isCareGiver, babyCtrl.update)
+
+// PUT localhost:3000/baby/:id/feeding/:feedid
+router.put('/:id/feeding/:feedid', isLoggedIn, isCareGiver, babyCtrl.updateFeeding)
+
+// GET localhost:3000/baby/:id/feeding/:feedid/edit
+router.get('/:id/feeding/:feedid/edit', isLoggedIn, isCareGiver, babyCtrl.editFeeding)
+
+
 export {
   router
 }
