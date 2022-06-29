@@ -32,7 +32,11 @@ const feedingSchema = new mongoose.Schema({
   feedType: String,
   amount: Number,
   startTime: Date,
-  endTime: Date
+  endTime: Date,
+  hasEnded: {
+    type: Boolean,
+    default: false
+  }
 }, {
   timestamps: true 
 })
