@@ -75,8 +75,8 @@
   <a href="/baby/<%= baby._id %>/addData"><button class="btn">Add Data</button></a>
 
   <div>Name: <%= baby.name %></div>
-  <% if (baby.birthday) { %> 
-  <div>Birthday: <%= dayjs(baby.birthday).format('LL') %></div>
+  <% if (birthday) { %> 
+  <div>Birthday: <%= birthday %></div>
   <% } %> 
   <% if (baby.sex) { %> 
   <div>Sex: <%= baby.sex %></div>

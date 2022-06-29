@@ -27,6 +27,20 @@ function getHourFormatFromMilliSeconds(millisec) {
   return hours + ":" + minutes + ":" + seconds
 }
 
+function dateHelper(type, date) {
+  if (type === "todaysDateTimeLocal") {
+    return dayjs().format('YYYY-MM-DD[T]HH[:]mm')
+  } else if (type === "todaysDate") {
+    return dayjs().format('YYYY-MM-DD')
+  } else if (type === "date") {
+    return dayjs(date).format('YYYY-MM-DD')
+  } else if (type === "timeLocal") {
+    return dayjs(date).format('YYYY-MM-DD[T]HH[:]mm')
+  } else {
+    return "Not a valid type for dateHelper()"
+  }
+}
+
 function index(req, res) {
   Baby.find({})
   .then(babyList => {
@@ -89,6 +103,7 @@ function show(req, res) {
       console.log( "baby.unfinishedFeedings: ", baby.unfinishedFeedings)
       res.render('baby/show',{
         baby,
+        birthday: dayjs(baby.birthday.toISOString().slice(0,10)).format('LL'),
         title: `${baby.name} Details`,
         dayjs: dayjs,
         todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
@@ -111,7 +126,7 @@ function show(req, res) {
 function edit(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
-    const birthday = dayjs(baby.birthday).format('YYYY-MM-DD')
+    const birthday = dayjs(baby.birthday.toISOString().slice(0,10)).format('YYYY-MM-DD')
     res.render('baby/edit', {
       baby: baby,
       birthday,
