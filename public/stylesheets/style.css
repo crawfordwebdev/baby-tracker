@@ -91,3 +91,7 @@ form>label {
 section {
   margin: 0 0 2rem 0;
 }
+
+.unfinished-item {
+  background-color: rgba(255, 52, 52, 0.5);
+}
