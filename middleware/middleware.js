@@ -8,15 +8,7 @@ function isLoggedIn(req, res, next) {
   res.redirect('/auth/google')
 }
 
-function isCareGiver(req, res, next) {
-  // FIXME Update logic here
-  // profile._id.equals(req.user.profile._id)
-  if (req.isAuthenticated()) return next()
-  res.redirect('/')
-}
-
 export {
   passUserToView,
-  isLoggedIn,
-  isCareGiver
+  isLoggedIn
 }
