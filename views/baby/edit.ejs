@@ -1,6 +1,5 @@
 <%- include('../partials/html-head') %>
 <%- include('../partials/nav') %>
-
 <section>
   <h1>Update <%= baby.name %></h1>
   <form action="/baby/<%= baby._id %>?_method=PUT" method="POST">
@@ -32,5 +31,4 @@
     <button type="submit">Update</button>
   </form>
 </section>
-
 <%- include('../partials/footer') %>
