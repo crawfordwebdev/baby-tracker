@@ -13,34 +13,34 @@ router.get('/', isLoggedIn, babyCtrl.index)
 router.post('/', isLoggedIn, babyCtrl.create)
 
 // GET localhost:3000/baby/:id
-router.get('/:id', isLoggedIn, isCareGiver, babyCtrl.show)
+router.get('/:id', isLoggedIn, babyCtrl.show)
 
 // GET localhost:3000/baby/:id/edit
-router.get('/:id/edit', isLoggedIn, isCareGiver, babyCtrl.edit)
+router.get('/:id/edit', isLoggedIn, babyCtrl.edit)
 
 // PUT localhost:3000/baby/:id
-router.put('/:id', isLoggedIn, isCareGiver, babyCtrl.update)
+router.put('/:id', isLoggedIn, babyCtrl.update)
 
 // DELETE localhost:3000/baby/:id
-router.delete('/:id', isLoggedIn, isCareGiver, babyCtrl.delete)
+router.delete('/:id', isLoggedIn, babyCtrl.delete)
 
 // GET localhost:3000/baby/:id/addData
-router.get('/:id/addData', isLoggedIn, isCareGiver, babyCtrl.showAddData)
+router.get('/:id/addData', isLoggedIn, babyCtrl.showAddData)
 
 // POST localhost:3000/baby/:id/feeding
 router.post('/:id/feeding', isLoggedIn, babyCtrl.createFeeding)
 
 // DELETE localhost:3000/baby/:id/feeding/:feedid
-router.delete('/:id/feeding/:feedid', isLoggedIn, isCareGiver, babyCtrl.deleteFeeding)
+router.delete('/:id/feeding/:feedid', isLoggedIn, babyCtrl.deleteFeeding)
 
 // PUT localhost:3000/baby/:id
-router.put('/:id', isLoggedIn, isCareGiver, babyCtrl.update)
+router.put('/:id', isLoggedIn, babyCtrl.update)
 
 // PUT localhost:3000/baby/:id/feeding/:feedid
-router.put('/:id/feeding/:feedid', isLoggedIn, isCareGiver, babyCtrl.updateFeeding)
+router.put('/:id/feeding/:feedid', isLoggedIn, babyCtrl.updateFeeding)
 
 // GET localhost:3000/baby/:id/feeding/:feedid/edit
-router.get('/:id/feeding/:feedid/edit', isLoggedIn, isCareGiver, babyCtrl.editFeeding)
+router.get('/:id/feeding/:feedid/edit', isLoggedIn, babyCtrl.editFeeding)
 
 
 export {
