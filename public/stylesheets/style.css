@@ -95,3 +95,7 @@ section {
 .unfinished-item {
   background-color: rgba(255, 52, 52, 0.5);
 }
+
+.fa-solid {
+  margin: 0.25rem 0.5rem 0.25rem 0.25rem;
+}
