@@ -1,7 +1,17 @@
 <%- include('../partials/html-head') %>
 <%- include('../partials/nav') %>
 
-<% if (baby.caregiver.equals(user?.profile._id)) { %>
+<section>
+  <div class="container-sm">
+    <h2>Quick Add</h2>
+    <div class="quick-add-container">
+      <a href="#"><button><i class="fa-solid fa-person-breastfeeding"></i>Add Feeding</button></a>
+      <a href="#"><button><i class="fa-solid fa-bed"></i>Add Sleep</button></a>
+      <a href="#"><button><i class="fa-solid fa-toilet"></i>Add Change</button></a>
+      <a href="#"><button><i class="fa-solid fa-weight-scale"></i></i></i>Add Measurement</button></a>
+    </div>
+  </div>
+</section>
 
 <% if (baby.unfinishedFeedings.length > 0) { %>
 <section>
@@ -72,7 +82,7 @@
 
 <section>
   <h1>Baby Details</h1>
-  <a href="/baby/<%= baby._id %>/addData"><button class="btn">Add Data</button></a>
+  <a href="/baby/<%= baby._id %>/addData"><button class="btn-lg">Add Data</button></a>
 
   <div>Name: <%= baby.name %></div>
   <% if (birthday) { %> 
@@ -174,6 +184,4 @@
   </div>
 <% } %> 
 </section>
-
-<% } %>
 <%- include('../partials/footer') %>
