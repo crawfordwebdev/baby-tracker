@@ -126,12 +126,16 @@ function show(req, res) {
 function edit(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
+    if (baby.caregiver.equals(req.user.profile._id)) {
     const birthday = dayjs(baby.birthday.toISOString().slice(0,10)).format('YYYY-MM-DD')
     res.render('baby/edit', {
       baby: baby,
       birthday,
       title: `Update ${baby.name}`,
     })
+  } else {
+    throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
+  }
   })
   .catch(err => {
     console.log(err)
@@ -148,7 +152,7 @@ function update(req, res) {
         res.redirect(`/baby/${baby._id}`)
       })
     } else {
-      throw new Error ('NOT AUTHORIZED')
+      throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
     }
   })
   .catch(err => {
@@ -166,7 +170,7 @@ function removeBaby(req, res) {
         res.redirect('/baby')
       })
     } else {
-      throw new Error ('NOT AUTHORIZED')
+      throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
     }
   })
   .catch(err => {
@@ -179,6 +183,8 @@ function showAddData(req, res) {
   Baby.findById(req.params.id)
   .populate('caregiver')
   .then(baby => {
+    if (baby.caregiver.equals(req.user.profile._id)) {
+
     console.log(baby)
     res.render(`baby/addData`,{
       baby,
@@ -186,6 +192,9 @@ function showAddData(req, res) {
       todaysDate: dayjs().format('YYYY-MM-DD'),
       todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
     })
+  } else {
+    throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
+  } 
   })
   .catch(err => {
     console.log(err)
@@ -196,58 +205,54 @@ function showAddData(req, res) {
 function editFeeding(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
-    const feeding = baby.feedings.id(req.params.feedid)
-    console.log()
+    if (baby.caregiver.equals(req.user.profile._id)) {
 
-    // if (feeding.date) {
-    //   feeding.date = dayjs(feeding.date).format('YYYY-MM-DD')
-    //   console.log("Triggered feeding.date")
-    // }
-    // if (feeding.startTime) {
-    //   console.log("original feed startTime: ", feeding.startTime)
-    //   let startTime = feeding.startTime.toISOString().slice(0,16)
-    //   feeding.startTime = startTime
-    //   console.log("Updated feed startTime: ", feeding.startTime.toISOString().slice(0,16))
-    // }
-    // if (feeding.endTime) {
-    //   feeding.endTime = dayjs(feeding.endTime).format('YYYY-MM-DD[T]HH[:]MM')
-    // }
+      const feeding = baby.feedings.id(req.params.feedid)
+      console.log()
 
+      // if (feeding.date) {
+      //   feeding.date = dayjs(feeding.date).format('YYYY-MM-DD')
+      //   console.log("Triggered feeding.date")
+      // }
+      // if (feeding.startTime) {
+      //   console.log("original feed startTime: ", feeding.startTime)
+      //   let startTime = feeding.startTime.toISOString().slice(0,16)
+      //   feeding.startTime = startTime
+      //   console.log("Updated feed startTime: ", feeding.startTime.toISOString().slice(0,16))
+      // }
+      // if (feeding.endTime) {
+      //   feeding.endTime = dayjs(feeding.endTime).format('YYYY-MM-DD[T]HH[:]MM')
+      // }
 
-    // const formattedDate = feeding.date ? feeding.date.toISOString().slice(0,10) : dayjs().format('YYYY-MM-DD')
-    // const formattedStartTime = feeding.startTime.toISOString().slice(0,16)
-    // const formattedEndtime = feeding.endtime ?  feeding.endTime.toISOString().slice(0,16) : dayjs().format('YYYY-MM-DD[T]HH[:]MM')
+      // const formattedDate = feeding.date ? feeding.date.toISOString().slice(0,10) : dayjs().format('YYYY-MM-DD')
+      // const formattedStartTime = feeding.startTime.toISOString().slice(0,16)
+      // const formattedEndtime = feeding.endtime ?  feeding.endTime.toISOString().slice(0,16) : dayjs().format('YYYY-MM-DD[T]HH[:]MM')
 
+      // console.log("toISOString StartTime: ", feeding.startTime.toISOString().slice(0,16))
+      // console.log("feeding.startTime dayjs: ", dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]MM'))
 
+      console.log("feeding.startTime: ", feeding.startTime)
 
-    // console.log("toISOString StartTime: ", feeding.startTime.toISOString().slice(0,16))
-    // console.log("feeding.startTime dayjs: ", dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]MM'))
+      const formattedDate = feeding.date ? dayjs(feeding.date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD')
+      const formattedStartTime = feeding.startTime ? dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]mm') : ''
+      const formattedEndtime = feeding.endtime ? dayjs(feeding.endTime ).format('YYYY-MM-DD[T]HH[:]mm') : dayjs().format('YYYY-MM-DD[T]HH[:]mm')
 
+      console.log("formattedStartTime ", formattedStartTime)
+      console.log("formattedEndtime ", formattedEndtime)
 
-    console.log("feeding.startTime: ", feeding.startTime)
-
-    const formattedDate = feeding.date ? dayjs(feeding.date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD')
-    const formattedStartTime = feeding.startTime ? dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]mm') : ''
-    const formattedEndtime = feeding.endtime ? dayjs(feeding.endTime ).format('YYYY-MM-DD[T]HH[:]mm') : dayjs().format('YYYY-MM-DD[T]HH[:]mm')
-
-    
-
-
-    console.log("formattedStartTime ", formattedStartTime)
-    console.log("formattedEndtime ", formattedEndtime)
-
-    // console.log("Feeding: ", feeding)
-
-    res.render(`baby/feeding/edit`,{
-      baby,
-      feed: feeding,
-      formattedDate,
-      formattedStartTime,
-      formattedEndtime,
-      title: `${baby.name} Update Feeding`,
-      todaysDate: dayjs().format('YYYY-MM-DD'),
-      todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
-    })
+      res.render(`baby/feeding/edit`,{
+        baby,
+        feed: feeding,
+        formattedDate,
+        formattedStartTime,
+        formattedEndtime,
+        title: `${baby.name} Update Feeding`,
+        todaysDate: dayjs().format('YYYY-MM-DD'),
+        todaysDateTimeLocal: dayjs().format('YYYY-MM-DD[T]HH[:]mm'),
+      })
+  } else {
+    throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
+  }  
   })
   .catch(err => {
     console.log(err)
@@ -294,7 +299,7 @@ function createFeeding(req, res) {
 function updateFeeding(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
-
+    if (baby.caregiver.equals(req.user.profile._id)) {
     for (let key in req.body) {
       if (req.body[key] === '') delete req.body[key]
     }
@@ -326,6 +331,9 @@ function updateFeeding(req, res) {
       console.log(err)
       res.redirect("/baby")
     })
+  } else {
+    throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
+  }
   })
   .catch(err => {
     console.log(err)
@@ -333,22 +341,24 @@ function updateFeeding(req, res) {
   })
 }
 
-
-
 function deleteFeeding(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
-    console.log("req.params.feedid: ", req.params.feedid)
-    baby.feedings.remove({_id: req.params.feedid})
-    baby.save()
-    .then(feeding => {
-      console.log("Feeding: ", feeding)
-      res.redirect(`/baby/${baby._id}`)
-    })
-    .catch(err => {
-      console.log(err)
-      res.redirect("/baby")
-    })
+    if (baby.caregiver.equals(req.user.profile._id)) {
+      console.log("req.params.feedid: ", req.params.feedid)
+      baby.feedings.remove({_id: req.params.feedid})
+      baby.save()
+      .then(feeding => {
+        console.log("Feeding: ", feeding)
+        res.redirect(`/baby/${baby._id}`)
+      })
+      .catch(err => {
+        console.log(err)
+        res.redirect("/baby")
+      })
+  } else {
+    throw new Error (`NOT AUTHORIZED: ${req.user.profile._id}`)
+  }
   })
   .catch(err => {
     console.log(err)
