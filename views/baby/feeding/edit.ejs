@@ -1,6 +1,5 @@
 <%- include('../../partials/html-head') %>
 <%- include('../../partials/nav') %>
-
 <section>
   <h1><%= baby.name %></h1>
   <form action="/baby/<%= baby._id %>/feeding/<%= feed._id %>?_method=PUT" method="POST">
@@ -28,5 +27,4 @@
     <button type="submit">Update feed</button>
   </form>
 </section>
-
 <%- include('../../partials/footer') %>
