@@ -1,8 +1,6 @@
 import { Router } from 'express'
 import * as babyCtrl from '../controllers/baby.js'
 import { isLoggedIn } from '../middleware/middleware.js'
-import { isCareGiver } from '../middleware/middleware.js'
-
 
 const router = Router()
 
