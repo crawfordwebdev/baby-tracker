@@ -22,6 +22,9 @@ router.put('/:id', isLoggedIn, babyCtrl.update)
 // DELETE localhost:3000/baby/:id
 router.delete('/:id', isLoggedIn, babyCtrl.delete)
 
+// PUT localhost:3000/baby/:id
+router.put('/:id', isLoggedIn, babyCtrl.update)
+
 // GET localhost:3000/baby/:id/addData
 router.get('/:id/addData', isLoggedIn, babyCtrl.showAddData)
 
@@ -30,9 +33,6 @@ router.post('/:id/feeding', isLoggedIn, babyCtrl.createFeeding)
 
 // DELETE localhost:3000/baby/:id/feeding/:feedid
 router.delete('/:id/feeding/:feedid', isLoggedIn, babyCtrl.deleteFeeding)
-
-// PUT localhost:3000/baby/:id
-router.put('/:id', isLoggedIn, babyCtrl.update)
 
 // PUT localhost:3000/baby/:id/feeding/:feedid
 router.put('/:id/feeding/:feedid', isLoggedIn, babyCtrl.updateFeeding)
