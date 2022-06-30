@@ -2,7 +2,7 @@
 <%- include('../partials/nav') %>
 
 <section>
-  <div class="container-sm">
+  <div class="container-sm" id="quick-add-section">
     <h2>Quick Add</h2>
     <div class="quick-add-container">
       <a href="#"><button><i class="fa-solid fa-person-breastfeeding"></i>Add Feeding</button></a>
@@ -115,7 +115,6 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Has Ended</th>
                 <th>Date</th>
                 <th>Feed Type</th>
                 <th>Amount</th>
@@ -129,9 +128,6 @@
             <tbody>
               <% baby.feedings.forEach(feeding => { %>
               <tr>
-                <td>
-                  <%= feeding.hasEnded %> 
-                </td>
                 <td>
                 <% if (feeding.date) { %>
                   <div class="data-point"><%= dayjs(feeding.date).format('L') %></div>
