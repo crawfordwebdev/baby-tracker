@@ -3,6 +3,7 @@
   --light-fg-color: rgba(0, 0, 0, 0.7);
   --fg-color: var(--light-fg-color);
   --bg-color: var(--light-bg-color);
+  --text-size: 2rem;
   --highlight-primary: #00ccff;
   --gradient: 
     linear-gradient(300deg, #44ea7b, rgba(186, 74, 255, 0) 100%), 
@@ -107,6 +108,70 @@ section {
   align-items: center;
 }
 
-.quick-add-container > a {
-  margin: 0.25rem;
+.quick-add-container > button {
+  margin: 0.45rem;
+  font-size: var(--text-size);
+  background-color: rgba(200, 200, 200, .4);
+  border: 2px solid black;
+  color: black;
+  border-radius: 10px;
+}
+
+.btn-modal-secondary {
+  font-size: inherit;
+}
+
+
+/* Created with
+  https://blog.koalite.com/bbg/ */
+
+.btn-modal-primary { 
+  font-size: inherit;
+  color: #000000; 
+  background-color: #57BFFF; 
+  border-color: #000000; 
+} 
+  
+.btn-modal-primary:hover, 
+.btn-modal-primary:focus, 
+.btn-modal-primary:active, 
+.btn-modal-primary.active, 
+.open .dropdown-toggle.btn-modal-primary { 
+  color: #000000; 
+  background-color: #4bace9; 
+  border-color: #000000; 
+} 
+  
+.btn-modal-primary:active, 
+.btn-modal-primary.active, 
+.open .dropdown-toggle.btn-modal-primary { 
+  background-image: none; 
+} 
+  
+.btn-modal-primary.disabled, 
+.btn-modal-primary[disabled], 
+fieldset[disabled] .btn-modal-primary, 
+.btn-modal-primary.disabled:hover, 
+.btn-modal-primary[disabled]:hover, 
+fieldset[disabled] .btn-modal-primary:hover, 
+.btn-modal-primary.disabled:focus, 
+.btn-modal-primary[disabled]:focus, 
+fieldset[disabled] .btn-modal-primary:focus, 
+.btn-modal-primary.disabled:active, 
+.btn-modal-primary[disabled]:active, 
+fieldset[disabled] .btn-modal-primary:active, 
+.btn-modal-primary.disabled.active, 
+.btn-modal-primary[disabled].active, 
+fieldset[disabled] .btn-modal-primary.active { 
+  background-color: #57BFFF; 
+  border-color: #000000; 
+} 
+  
+.btn-modal-primary .badge { 
+  color: #57BFFF; 
+  background-color: #000000; 
+}
+
+.modal-form {
+  align-items: flex-start;
 }

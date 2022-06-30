@@ -1,17 +1,121 @@
 <%- include('../partials/html-head') %>
 <%- include('../partials/nav') %>
 
+<script defer type="text/javascript" src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js">
+  document.getElementById('feed-date').value = dayjs().format('YYYY-MM-DD')
+  document.getElementById('feed-startTime').value = dayjs().format('YYYY-MM-DD[T]HH[:]mm')
+</script>
+
+<!-- Add Feed Modal -->
+<div class="modal fade" id="add-feed-modal" tabindex="-1" aria-labelledby="add-feed-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-feed-modal">Add Feeding</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="modal-form" action="/baby/<%= baby._id %>/feeding" method="POST">
+          <label>
+            Date:
+            <input type="date" id="feed-date" name="date">
+          </label>
+          <label>
+            Feed Type:
+            <input type="text" name="feedType">
+          </label>
+          <label>
+            Amount:
+            <input type="number" name="amount"> 
+          </label>
+          <label>
+            Start Time:
+            <input type="datetime-local" id="feed-startTime" name="startTime">
+          </label>
+          <label>
+            End Time:
+            <input type="datetime-local" name="endTime">
+          </label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-modal-primary btn-lg">Add this feed</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Sleep Modal -->
+<div class="modal fade" id="add-sleep-modal" tabindex="-1" aria-labelledby="add-sleep-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-sleep-modal">Add Sleep</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Feature soon to come.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-modal-primary btn-lg">Add this sleep</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Change Modal -->
+<div class="modal fade" id="add-change-modal" tabindex="-1" aria-labelledby="add-change-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-change-modal">Add Change</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Feature soon to come.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-modal-primary btn-lg">Add this change</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Measurement Modal -->
+<div class="modal fade" id="add-measurement-modal" tabindex="-1" aria-labelledby="add-measurement-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-measurement-modal">Add Measurement</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Feature soon to come.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-modal-primary btn-lg">Add measurement</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
 <section>
   <div class="container-sm" id="quick-add-section">
     <h2>Quick Add</h2>
     <div class="quick-add-container">
-      <a href="#"><button><i class="fa-solid fa-person-breastfeeding"></i>Add Feeding</button></a>
-      <a href="#"><button><i class="fa-solid fa-bed"></i>Add Sleep</button></a>
-      <a href="#"><button><i class="fa-solid fa-toilet"></i>Add Change</button></a>
-      <a href="#"><button><i class="fa-solid fa-weight-scale"></i></i></i>Add Measurement</button></a>
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#add-feed-modal"><i class="fa-solid fa-person-breastfeeding"></i>Add Feeding</button>
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#add-sleep-modal"><i class="fa-solid fa-bed"></i>Add Sleep</button>
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#add-change-modal"><i class="fa-solid fa-toilet"></i>Add Change</button>
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#add-measurement-modal"><i class="fa-solid fa-weight-scale"></i></i></i>Add Measurement</button>
     </div>
   </div>
-</section>
 
 <% if (baby.unfinishedFeedings.length > 0) { %>
 <section>
@@ -20,7 +124,7 @@
       <div class="card-body">
         <h4 class="card-title">Unfinished Feedings</h4>
         <p class="card-description">
-          Please set an end time for your feeds<br>
+          Please set an end time for your feed<br>
           Total Unfinished Feedings: <%= baby.unfinishedFeedings.length %> 
         </p>
         <div class="table-responsive">
