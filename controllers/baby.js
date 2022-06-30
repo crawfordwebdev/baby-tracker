@@ -42,7 +42,7 @@ function dateHelper(type, date) {
 }
 
 function index(req, res) {
-  Baby.find({})
+  Baby.find({ caregiver: req.user.profile._id})
   .then(babyList => {
     res.render('baby/index', {
       babyList,
@@ -76,17 +76,6 @@ function show(req, res) {
   Baby.findById(req.params.id)
   .populate('caregiver')
   .then(baby => {
-    // const unFinishedFeedings = Baby.feedings.find({hasEnded : false})
-    // console.log ("unfinished feedings: ", unFinishedFeedings)
-
-    // // This works
-    // baby.feedings.forEach(feed => {
-    //   if (typeof feed.startTime != "undefined" && typeof feed.endTime != "undefined") {
-    //     feed.hasEnded = true
-    //   } else {
-    //     feed.hasEnded = false
-    //   }
-    // });
     baby.feedings.forEach(feed => {
       if (feed.startTime && feed.endTime) {
         feed.hasEnded = true
@@ -206,39 +195,10 @@ function editFeeding(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
     if (baby.caregiver.equals(req.user.profile._id)) {
-
       const feeding = baby.feedings.id(req.params.feedid)
-      console.log()
-
-      // if (feeding.date) {
-      //   feeding.date = dayjs(feeding.date).format('YYYY-MM-DD')
-      //   console.log("Triggered feeding.date")
-      // }
-      // if (feeding.startTime) {
-      //   console.log("original feed startTime: ", feeding.startTime)
-      //   let startTime = feeding.startTime.toISOString().slice(0,16)
-      //   feeding.startTime = startTime
-      //   console.log("Updated feed startTime: ", feeding.startTime.toISOString().slice(0,16))
-      // }
-      // if (feeding.endTime) {
-      //   feeding.endTime = dayjs(feeding.endTime).format('YYYY-MM-DD[T]HH[:]MM')
-      // }
-
-      // const formattedDate = feeding.date ? feeding.date.toISOString().slice(0,10) : dayjs().format('YYYY-MM-DD')
-      // const formattedStartTime = feeding.startTime.toISOString().slice(0,16)
-      // const formattedEndtime = feeding.endtime ?  feeding.endTime.toISOString().slice(0,16) : dayjs().format('YYYY-MM-DD[T]HH[:]MM')
-
-      // console.log("toISOString StartTime: ", feeding.startTime.toISOString().slice(0,16))
-      // console.log("feeding.startTime dayjs: ", dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]MM'))
-
-      console.log("feeding.startTime: ", feeding.startTime)
-
       const formattedDate = feeding.date ? dayjs(feeding.date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD')
       const formattedStartTime = feeding.startTime ? dayjs(feeding.startTime).format('YYYY-MM-DD[T]HH[:]mm') : ''
       const formattedEndtime = feeding.endtime ? dayjs(feeding.endTime ).format('YYYY-MM-DD[T]HH[:]mm') : dayjs().format('YYYY-MM-DD[T]HH[:]mm')
-
-      console.log("formattedStartTime ", formattedStartTime)
-      console.log("formattedEndtime ", formattedEndtime)
 
       res.render(`baby/feeding/edit`,{
         baby,
@@ -263,8 +223,6 @@ function editFeeding(req, res) {
 
 
 function createFeeding(req, res) {
-  console.log("REQ BODY: ", req.body)
-  console.log("dayjs UTC", dayjs(req.body.date).utc().format())
   Baby.findById(req.params.id)
   .then(baby => {
     // Take care of any information left out
@@ -320,7 +278,6 @@ function updateFeeding(req, res) {
       feeding.hasEnded = true
       console.log("has it ended: ", feeding.hasEnded)
     }
-    console.log("Full baby: ", JSON.stringify(baby))
     
     baby.save()
     .then(feeding=> {
@@ -345,7 +302,6 @@ function deleteFeeding(req, res) {
   Baby.findById(req.params.id)
   .then(baby => {
     if (baby.caregiver.equals(req.user.profile._id)) {
-      console.log("req.params.feedid: ", req.params.feedid)
       baby.feedings.remove({_id: req.params.feedid})
       baby.save()
       .then(feeding => {
