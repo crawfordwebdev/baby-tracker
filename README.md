@@ -6,6 +6,10 @@
 - **[Plan Link](https://trello.com/b/UXagERsE/baby-tracker)**<br>
 
 ## Screenshot: 
+<img src="https://raw.githubusercontent.com/crawfordwebdev/baby-tracker/main/assets/github/mobile01.png" alt="Screenshot of a mobile view of the Baby Tracker Application" style="max-width: 95vw;">
+<img src="https://raw.githubusercontent.com/crawfordwebdev/baby-tracker/main/assets/github/mobile02.png" alt="Screenshot of a mobile view of the Baby Tracker Application" style="max-width: 95vw;">
+<img src="https://raw.githubusercontent.com/crawfordwebdev/baby-tracker/main/assets/github/mobile03.png" alt="Screenshot of a mobile view of the Baby Tracker Application" style="max-width: 95vw;">
+<img src="https://raw.githubusercontent.com/crawfordwebdev/baby-tracker/main/assets/github/desktop.png" alt="Screenshot of a desktop view of the Baby Tracker Application" style="max-width: 95vw;">
 
 ## Technologies Used: 
 HTML, CSS, JavaScript, node.js, express.js, Day.js, mongoose, mongoDB<br>
