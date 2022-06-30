@@ -99,3 +99,14 @@ section {
 .fa-solid {
   margin: 0.25rem 0.5rem 0.25rem 0.25rem;
 }
+
+#quick-add-section, .quick-add-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.quick-add-container > a {
+  margin: 0.25rem;
+}
