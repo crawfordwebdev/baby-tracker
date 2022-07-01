@@ -53,12 +53,6 @@ body {
   width: clamp(85vw, 60vw, 50vw);
   max-width: 970px;
   margin: 0 auto;
-  /* max-width: 970px; */
-  /* margin: auto clamp(5vw, 10vw, 100vw); */
-  /* margin-left: clamp(5vw, 10vw, 100vw);
-  margin-right: clamp(5vw, 10vw, 100vw); */
-  
-  
 }
 
 #brand-name {
