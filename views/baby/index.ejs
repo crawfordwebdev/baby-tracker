@@ -1,31 +1,51 @@
 <%- include('../partials/html-head') %>
 <%- include('../partials/nav') %>
+
+<!-- Add Baby Modal -->
+<div class="modal fade" id="add-baby-modal" tabindex="-1" aria-labelledby="add-baby-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-baby-modal">Add a Baby</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="modal-body" action="/baby" method="POST">
+          <label>
+            Name:
+            <input type="text" name="name" autocomplete="off" required>
+          </label>
+          <label>
+            Birthday:
+            <input type="date"  name="birthday" value="<%= todaysDate %>">
+          </label>
+          <label>
+            Sex:
+            <input type="text" name="sex">
+          </label>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-modal-primary btn-lg">Add this child</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
 <section>
   <h1>My Babies</h1>
   <ul class="baby-list">
   <% babyList.forEach(baby => { %>
     <li>
       <a href="/baby/<%= baby._id %>"><%= baby.name %></a>
-      <a href="/baby/<%= baby._id %>/addData"><button class="btn">Add Data</button></a>
+      <a href="/baby/<%= baby._id %>/addData"><button class="btn" hidden>Add Data</button></a>
     </li>
   <% }) %>
   </ul>
-  <form action="/baby" method="POST">
-    <h2>Add a baby</h2>
-    <label>
-      Name:
-      <input type="text" name="name" autocomplete="off" required>
-    </label>
-    <label>
-      Birthday:
-      <input type="date"  name="birthday" value="<%= todaysDate %>">
-    </label>
-    <label>
-      Sex:
-      <input type="text" name="sex">
-    </label>
-    <button type="submit">Add a baby</button>
-  </form>
+
+  <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#add-baby-modal"><i class="fas fa-baby"></i>Add a Baby</button>
 
 </section>
 <%- include('../partials/footer') %>
