@@ -3,7 +3,7 @@
   --light-fg-color: rgba(0, 0, 0, 0.7);
   --fg-color: var(--light-fg-color);
   --bg-color: var(--light-bg-color);
-  --text-size: 2rem;
+  --text-size: 2.5rem;
   --highlight-primary: #00ccff;
   --gradient: 
     linear-gradient(300deg, #44ea7b, rgba(186, 74, 255, 0) 100%), 
@@ -48,6 +48,26 @@ body {
   color: var(--fg-color);
 }
 
+#welcome-section {
+  position: relative;
+  width: clamp(85vw, 60vw, 50vw);
+  max-width: 970px;
+  margin: 0 auto;
+  /* max-width: 970px; */
+  /* margin: auto clamp(5vw, 10vw, 100vw); */
+  /* margin-left: clamp(5vw, 10vw, 100vw);
+  margin-right: clamp(5vw, 10vw, 100vw); */
+  
+  
+}
+
+#brand-name {
+  margin: 1rem;
+  font-size: 9rem;
+  font-family: 'Gugi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
 nav {
   background-color: var(--bg-color);
   font-size: 1.6rem;
@@ -60,6 +80,7 @@ main, section {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  font-size: var(--text-size);
 }
 
 h1 {
