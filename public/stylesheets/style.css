@@ -62,12 +62,13 @@ body {
   Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
-nav {
+nav .navbar {
   background-color: var(--bg-color);
   font-size: 1.6rem;
   display: flex;
   justify-content: center;
 }
+
 
 main, section {
   display: flex;
