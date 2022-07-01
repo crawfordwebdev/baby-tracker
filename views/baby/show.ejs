@@ -1,11 +1,6 @@
 <%- include('../partials/html-head') %>
 <%- include('../partials/nav') %>
 
-<script defer type="text/javascript" src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js">
-  document.getElementById('feed-date').value = dayjs().format('YYYY-MM-DD')
-  document.getElementById('feed-startTime').value = dayjs().format('YYYY-MM-DD[T]HH[:]mm')
-</script>
-
 <!-- Add Feed Modal -->
 <div class="modal fade" id="add-feed-modal" tabindex="-1" aria-labelledby="add-feed-modal" aria-hidden="true">
   <div class="modal-dialog">
@@ -107,6 +102,25 @@
 </div>
 
 <section>
+  <h1>Baby Details</h1>
+  <div>Name: <%= baby.name %></div>
+  <% if (birthday) { %> 
+  <div>Birthday: <%= birthday %></div>
+  <% } %> 
+  <% if (baby.sex) { %> 
+  <div>Sex: <%= baby.sex %></div>
+  <% } %> 
+
+  <form action="/baby/<%= baby._id %>/edit" method="GET">
+    <button class="btn edit-baby-button" type="submit">Edit this baby</button>
+  </form>
+  <form action="/baby/<%= baby._id %>?_method=DELETE" method="POST">
+    <button class="btn remove-baby-button" type="submit">Remove this baby</button>
+  </form>
+
+</section>
+
+<section>
   <div class="container-sm" id="quick-add-section">
     <h2>Quick Add</h2>
     <div class="quick-add-container">
@@ -183,27 +197,6 @@
   </div>
 </section>
 <% } %> 
-
-<section>
-  <h1>Baby Details</h1>
-  <a href="/baby/<%= baby._id %>/addData"><button class="btn-lg">Add Data</button></a>
-
-  <div>Name: <%= baby.name %></div>
-  <% if (birthday) { %> 
-  <div>Birthday: <%= birthday %></div>
-  <% } %> 
-  <% if (baby.sex) { %> 
-  <div>Sex: <%= baby.sex %></div>
-  <% } %> 
-
-  <form action="/baby/<%= baby._id %>/edit" method="GET">
-    <button class="btn" type="submit">Edit this baby</button>
-  </form>
-  <form action="/baby/<%= baby._id %>?_method=DELETE" method="POST">
-    <button class="btn" type="submit">Remove this baby</button>
-  </form>
-
-</section>
 
 <section>
 <% if (baby.feedings.length > 0) { %>
