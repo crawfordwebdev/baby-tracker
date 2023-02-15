@@ -2,7 +2,6 @@
 <p>Website for recording and tracking a baby's basic needs. The user can  create an account using Google as their sign-in. From there, they can add their child and put entries for various needs being filled.</p><br>
 
 ## Getting Started: 
-**[![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white) (Deployed Link)](https://dookie-data.herokuapp.com/)**<br>
 **[![Trello](https://img.shields.io/badge/Trello-%23026AA7.svg?style=for-the-badge&logo=Trello&logoColor=white) (Plan Link)](https://trello.com/b/UXagERsE/baby-tracker)**<br><br>
 
 ## Screenshot: 
